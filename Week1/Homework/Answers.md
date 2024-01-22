@@ -111,6 +111,23 @@ Which were the 3 pick up Boroughs that had a sum of total_amount superior to 500
 - "Bronx" "Manhattan" "Queens" 
 - "Brooklyn" "Queens" "Staten Island"
 
+### Hafiz Answer:
+`"Brooklyn" "Manhattan" "Queens"`
+```
+create table joined_table as (
+select "PULocationID", total_amount, "LocationID", "Borough" from yellow_taxi_data 
+Left join zone_data ON "PULocationID" ="LocationID" );
+
+select sum(total_amount) as total,"Borough" from joined_table group by "Borough" 
+having sum(total_amount) > 50000 
+ORDER BY total DESC;
+
+```
+
+- 2619378 Brooklyn 
+- 2460386  Queens 
+- 2427880 Manhattan 
+- 818158 Bronx 
 
 ## Question 6. Largest tip
 
@@ -124,6 +141,17 @@ Note: it's not a typo, it's `tip` , not `trip`
 - JFK Airport
 - Long Island City/Queens Plaza
 
+### Hafiz Answer:
+
+`JFK Airport`
+
+```
+select "Zone" from zone_data 
+where "LocationID" = (select "DOLocationID" from joined_table 
+where "Zone" = 'Astoria'and "tip_amount" = (SELECT MAX("tip_amount")
+FROM joined_table WHERE "Zone" = 'Astoria') )
+
+```
 
 
 ## Terraform
