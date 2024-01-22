@@ -75,17 +75,31 @@ Remember that `lpep_pickup_datetime` and `lpep_dropoff_datetime` columns are in 
 - 15859
 - 89009
 
+### Hafiz Answer:
+`15612`
+```
+select count(*) from yellow_taxi_data
+where date(lpep_pickup_datetime) = TO_DATE('2019-09-18','YYYY-MM-DD') and date(lpep_dropoff_datetime) = TO_DATE('2019-09-18','YYYY-MM-DD')
+
+```
+
 ## Question 4. Largest trip for each day
 
 Which was the pick up day with the largest trip distance
 Use the pick up time for your calculations.
+
 
 - 2019-09-18
 - 2019-09-16
 - 2019-09-26
 - 2019-09-21
 
-
+### Hafiz Answer:
+`2019-09-26`
+```
+SELECT date(lpep_pickup_datetime), trip_distance from yellow_taxi_data
+where trip_distance = (select max(trip_distance) from yellow_taxi_data) 
+```
 ## Question 5. The number of passengers
 
 Consider lpep_pickup_datetime in '2019-09-18' and ignoring Borough has Unknown

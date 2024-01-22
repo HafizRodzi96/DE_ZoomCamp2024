@@ -6,7 +6,7 @@ services:
       - POSTGRES_PASSWORD=root
       - POSTGRES_DB=ny_taxi_hw
     volumes:
-      - "/workspaces/DE_ZoomCamp2024/Week1/Homework/data"
+      - "/c/DE_ZoomCamp2024/Week1/Homework/data:/var/lib/postgresql/data:rw"
     ports:
       - "5432:5432"
   pgadmin:
@@ -15,4 +15,4 @@ services:
       - PGADMIN_DEFAULT_EMAIL=admin@admin.com
       - PGADMIN_DEFAULT_PASSWORD=root
     ports:
-      - "8080:80"
+      - "8079:80"
