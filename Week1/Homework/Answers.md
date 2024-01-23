@@ -146,10 +146,13 @@ Note: it's not a typo, it's `tip` , not `trip`
 `JFK Airport`
 
 ```
-select "Zone" from zone_data 
-where "LocationID" = (select "DOLocationID" from joined_table 
-where "Zone" = 'Astoria'and "tip_amount" = (SELECT MAX("tip_amount")
-FROM joined_table WHERE "Zone" = 'Astoria') )
+create table joined_table as (
+select "PULocationID", "DOLocationID" ,total_amount, "LocationID", "Borough",tip_amount,"Zone"  from yellow_taxi_data 
+Left join zone_data ON "PULocationID" ="LocationID")
+
+select * from joined_table 
+where "Zone" = 'Astoria' 
+order by tip_amount desc
 
 ```
 
@@ -175,6 +178,63 @@ terraform apply
 
 Paste the output of this command into the homework submission form.
 
+### Hafiz Answer:
+```
+  # google_storage_bucket.Homework-Bucket-testingTerra will be created
+  + resource "google_storage_bucket" "Homework-Bucket-testingTerra" {
+      + effective_labels            = (known after apply)
+      + force_destroy               = true
+      + id                          = (known after apply)
+      + location                    = "US"
+      + name                        = "unified-surfer-405214-testing_homework"
+      + project                     = (known after apply)
+      + public_access_prevention    = (known after apply)
+      + rpo                         = (known after apply)
+      + self_link                   = (known after apply)
+      + storage_class               = "STANDARD"
+      + terraform_labels            = (known after apply)
+      + uniform_bucket_level_access = (known after apply)
+      + url                         = (known after apply)
+
+      + lifecycle_rule {
+          + action {
+              + type = "Delete"
+            }
+          + condition {
+              + age                   = 1
+              + matches_prefix        = []
+              + matches_storage_class = []
+              + matches_suffix        = []
+              + with_state            = (known after apply)
+            }
+        }
+      + lifecycle_rule {
+          + action {
+              + type = "AbortIncompleteMultipartUpload"
+            }
+          + condition {
+              + age                   = 1
+              + matches_prefix        = []
+              + matches_storage_class = []
+              + matches_suffix        = []
+              + with_state            = (known after apply)
+            }
+        }
+    }
+
+Plan: 1 to add, 0 to change, 0 to destroy.
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+
+google_storage_bucket.Homework-Bucket-testingTerra: Creating...
+google_storage_bucket.Homework-Bucket-testingTerra: Creation complete after 2s [id=unified-surfer-405214-testing_homework]
+
+Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
+```
 
 ## Submitting the solutions
 
